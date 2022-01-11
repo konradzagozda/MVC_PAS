@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+    <h1>Lista książek</h1>
+    <h:link value="Stwórz książkę" outcome="createBook" />
+    <h:form>
+        <h:outputLabel for="uuidFilter">
+            <h:outputText value="Filtruj po uuid: "/>
+        </h:outputLabel>
+        <h:inputText id="uuidFilter" value="#{listBooksBean.uuidFilter}"/> <br/>
+        <h:commandButton value="Filtruj" action="#{listBooksBean.applyFilter}"/> <br/>
+
+        <h:dataTable value="#{listBooksBean.bookList}" var="book">
+            <h:column>
+                <f:facet name="header">Uuid</f:facet>
+                #{book.uuid}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tytuł</f:facet>
+                #{book.title}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data wydania</f:facet>
+                #{book.releaseDate}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Autor</f:facet>
+                #{book.authorName}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edycja</f:facet>
+                <h:commandButton value="edytuj" action="#{listBooksBean.moveToEdit(book)}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Usuń</f:facet>
+                <h:commandButton value="Usuń" action="#{listBooksBean.remove(book)}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Szczegóły</f:facet>
+                <h:commandButton value="szczegóły" action="#{listBooksBean.moveToDetails(book)}" />
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>

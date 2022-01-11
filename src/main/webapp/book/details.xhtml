@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+   <h1>Szczegóły książki</h1>
+    <h:form>
+        <h:outputText value="Uuid: #{listBooksBean.selectedBook.uuid}"/> <br/>
+        <h:outputText value="Tytuł: #{listBooksBean.selectedBook.title}"/> <br/>
+        <h:outputText value="Data wydania: #{listBooksBean.selectedBook.releaseDate}"/> <br/>
+        <h:outputText value="Autor: #{listBooksBean.selectedBook.authorName}"/> <br/>
+
+        <h:commandButton value="Powrót do listy książek" action="bookList"/>
+    </h:form>
+
+    <h2>Lista wypożyczeń tej książki</h2>
+    <h:form>
+        <h:dataTable value="#{listBooksBean.selectedBooksRents}" var="rent">
+            <h:column>
+                <f:facet name = "header">Uuid</f:facet>
+                #{rent.uuid}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Początek wypożyczenia:</f:facet>
+                #{rent.startDate}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Klient:</f:facet>
+                #{rent.client.uuid} #{rent.client.login}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Książka:</f:facet>
+                #{rent.book.uuid} #{rent.book.title}
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+    <h1>Lista użytkowników</h1>
+    <h:link value="Stwórz użytkownika" outcome = "createUser" />
+    <h:form>
+        <h:outputLabel for="uuidFilter">
+            <h:outputText value="Filtruj po uuid: "/>
+        </h:outputLabel>
+        <h:inputText id="uuidFilter" value="#{listUsersBean.uuidFilter}"/> <br/>
+        <h:commandButton value="Filtruj" action="#{listUsersBean.applyFilter}"/> <br/>
+
+        <h:dataTable value="#{listUsersBean.userList}" var="user">
+            <h:column>
+                <f:facet name = "header">Uuid</f:facet>
+                #{user.uuid}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Poziom dostępu</f:facet>
+                #{user.accessLevel}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Login</f:facet>
+                #{user.login}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Adres</f:facet>
+                #{user.address}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Pesel</f:facet>
+                #{user.pesel}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Aktywny</f:facet>
+                <h:outputLabel value="#{user.active == 'true' ? 'TAK' : 'NIE'}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Akcja</f:facet>
+                <h:commandButton value="zmień aktywność" action="#{listUsersBean.changeActivity(user)}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Szczegóły</f:facet>
+                <h:commandButton value="szczegóły" action="#{listUsersBean.moveToDetails(user)}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edycja</f:facet>
+                <h:commandButton value="edytuj" action="#{listUsersBean.moveToEdit(user)}" />
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+</h:body>
+</html>

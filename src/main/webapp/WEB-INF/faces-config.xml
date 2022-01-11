@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                                  http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>userList</from-outcome>
+            <to-view-id>/user/list.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>createUser</from-outcome>
+            <to-view-id>/user/createUser.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>bookList</from-outcome>
+            <to-view-id>/book/list.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>createBook</from-outcome>
+            <to-view-id>/book/createBook.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>rentList</from-outcome>
+            <to-view-id>/rent/list.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>createRent</from-outcome>
+            <to-view-id>/rent/createRent.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+</faces-config>

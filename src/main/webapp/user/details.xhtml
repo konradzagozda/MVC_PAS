@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+   <h1>Szczegóły użytkownika</h1>
+    <h:form>
+        <h:outputText value="Uuid: #{listUsersBean.selectedUser.uuid}"/> <br/>
+        <h:outputText value="Login: #{listUsersBean.selectedUser.login}"/> <br/>
+        <h:outputText value="Adres: #{listUsersBean.selectedUser.address}"/> <br/>
+        <h:outputText value="Pesel: #{listUsersBean.selectedUser.pesel}"/> <br/>
+        <h:outputText value="Poziom dostępu: #{listUsersBean.selectedUser.accessLevel}"/> <br/>
+        <h:outputText value="Aktywność: #{listUsersBean.selectedUser.active}"/> <br/>
+        <h:commandButton value="Powrót do listy użytkowników" action="userList"/>
+    </h:form>
+
+    <h2>Lista wypożyczeń</h2>
+    <h:form>
+        <h:dataTable value="#{listUsersBean.selectedUsersRents}" var="rent">
+            <h:column>
+                <f:facet name = "header">Uuid</f:facet>
+                #{rent.uuid}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Początek wypożyczenia:</f:facet>
+                #{rent.startDate}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Klient:</f:facet>
+                #{rent.client.uuid} #{rent.client.login}
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Książka:</f:facet>
+                #{rent.book.uuid} #{rent.book.title}
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>

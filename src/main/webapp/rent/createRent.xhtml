@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+    <h1>Stwórz wypożyczenie</h1>
+    <h:link value="powrót do listy wypożyczeń" outcome="rentList"/>
+    <h:form>
+        <h:outputLabel for="userUuid">
+            <h:outputText value="uuid użytkownika: " />
+        </h:outputLabel>
+        <h:inputText id="userUuid" value="#{createRentBean.rent.clientUuid}" required="true" /> <br/>
+
+        <h:outputLabel for="bookUuid">
+            <h:outputText value="uuid książki: " />
+        </h:outputLabel>
+        <h:inputText id="bookUuid" value="#{createRentBean.rent.bookUuid}" required="true" /> <br/>
+
+        <h:outputLabel for="startDate">
+            <h:outputText value="data wypożyczenia: " />
+        </h:outputLabel>
+        <h:inputText id="startDate" value="#{createRentBean.rent.startDate}" required="true" /> <br/>
+
+        <h:commandButton id="cmdInsert" value="Stwórz użytkownika" action="#{createRentBean.create}"/>
+    </h:form>
+</h:body>
+</html>

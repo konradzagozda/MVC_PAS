@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <h1>Lista wypożyczeń</h1>
+        <h:link value="Stwórz wypożyczenie" outcome = "createRent" />
+        <h:form>
+            <h:outputLabel for="uuidClientFilter">
+                <h:outputText value="Filtruj po uuid klienta: "/>
+            </h:outputLabel>
+            <h:inputText id="uuidClientFilter" value="#{listRentsBean.uuidClientFilter}"/> <br/>
+            <h:outputLabel for="uuidBookFilter">
+                <h:outputText value="Filtruj po uuid książki: "/>
+            </h:outputLabel>
+            <h:inputText id="uuidBookFilter" value="#{listRentsBean.uuidBookFilter}"/> <br/>
+
+            <h:commandButton value="Filtruj" action="#{listRentsBean.applyFilter}"/> <br/>
+
+            <h:dataTable value="#{listRentsBean.rentList}" var="rent">
+                <h:column>
+                    <f:facet name = "header">Uuid</f:facet>
+                    #{rent.uuid}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Początek wypożyczenia:</f:facet>
+                    #{rent.startDate}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Koniec wypożyczenia:</f:facet>
+                    #{rent.endDate}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Klient:</f:facet>
+                    #{rent.client.uuid} #{rent.client.login}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Książka:</f:facet>
+                    #{rent.book.uuid} #{rent.book.title}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Zakończ</f:facet>
+                    <h:commandButton value="Zakończ" action="#{listRentsBean.end(rent)}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Usuń</f:facet>
+                    <h:commandButton value="usuń" action="#{listRentsBean.delete(rent)}" />
+                </h:column>
+            </h:dataTable>
+        </h:form>
+
+    </h:body>
+</html>
+

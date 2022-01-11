@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+    <h1>Stwórz użytkownika</h1>
+    <h:link value="powrót do listy użytkowników" outcome="userList"/>
+    <h:form>
+        <h:outputLabel for="login">
+            <h:outputText value="Login: " />
+        </h:outputLabel>
+        <h:inputText id="login" value="#{createUserBean.user.login}" required="true" /> <br/>
+
+        <h:outputLabel for="address">
+            <h:outputText value="Adres: " />
+        </h:outputLabel>
+        <h:inputText id="address" value="#{createUserBean.user.address}" required="true"/> <br/>
+
+
+        <h:outputLabel for="pesel">
+            <h:outputText value="Pesel: " />
+        </h:outputLabel>
+        <h:inputText id="pesel" value="#{createUserBean.user.pesel}" required="true" validator="#{createUserBean.validatePesel}"/> <br/>
+
+        <h:outputText value="Poziom dostępu: "/>
+        <h:selectOneRadio value="#{createUserBean.user.accessLevel}">
+            <f:selectItem itemValue="CLIENT" itemLabel="Klient" />
+            <f:selectItem itemValue="ADMINUSER" itemLabel="Administrator" />
+            <f:selectItem itemValue="ADMINRESOURCES" itemLabel="Administrator zasobów" />
+        </h:selectOneRadio>
+
+        <h:commandButton id="cmdInsert" value="Stwórz użytkownika" action="#{createUserBean.create}"/>
+    </h:form>
+</h:body>
+</html>
