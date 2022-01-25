@@ -21,6 +21,11 @@ public class ListRentsBean implements Serializable {
     private final ApiRequester requester = new ApiRequester("rents");
     private String uuidClientFilter = "";
     private String uuidBookFilter = "";
+    private List<Rent> rentList = getRentListFromAPI();
+
+    public List<Rent> getRentList() {
+        return rentList;
+    }
 
     public String getUuidBookFilter() {
         return uuidBookFilter;
@@ -38,7 +43,7 @@ public class ListRentsBean implements Serializable {
         this.uuidClientFilter = uuidClientFilter;
     }
 
-    public List<Rent> getRentList() {
+    public List<Rent> getRentListFromAPI() {
         String json = requester.get();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -61,15 +66,18 @@ public class ListRentsBean implements Serializable {
 
     public String end(Rent rent) {
         requester.put(rent.getUuid().toString(), ""); // put on rent ends the rent
+        rentList = getRentListFromAPI();
         return "";
     }
     public String delete(Rent rent) {
         requester.delete(rent.getUuid().toString()); // put on rent ends the rent
+        rentList = getRentListFromAPI();
         return "";
     }
 
     public String applyFilter() {
         // just refresh page so getRentList is called again.
+        rentList = getRentListFromAPI();
         return "";
     }
 }

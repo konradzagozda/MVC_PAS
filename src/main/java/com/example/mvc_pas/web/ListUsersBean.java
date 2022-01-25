@@ -24,6 +24,11 @@ public class ListUsersBean implements Serializable {
     private User selectedUser;
     private List<Rent> selectedUsersRents = new ArrayList<>();
     private String uuidFilter = "";
+    private List<User> userList = getUserListFromAPI();
+
+    public List<User> getUserList() {
+        return userList;
+    }
 
     public String getUuidFilter() {
         return uuidFilter;
@@ -53,7 +58,7 @@ public class ListUsersBean implements Serializable {
         selectedUsersRents = selectedUsersRents.stream().filter(byUser).collect(Collectors.toList());
     }
 
-    public List<User> getUserList() {
+    public List<User> getUserListFromAPI() {
         String json = requesterUsers.get();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -73,17 +78,20 @@ public class ListUsersBean implements Serializable {
         String action = (user.isActive() ? "deactivate" : "activate");
         String optionString = user.getUuid().toString() + "/" + action;
         requesterUsers.custom("put", optionString);
+        userList = getUserListFromAPI();
         return "";
     }
 
     public String moveToDetails(User user) throws JsonProcessingException {
         setSelectedUser(user);
         setSelectedUsersRents();
+        userList = getUserListFromAPI();
         return "/user/details.xhtml?faces-redirect=true";
     }
 
     public String moveToEdit(User user) {
         setSelectedUser(user);
+        userList = getUserListFromAPI();
         return "/user/modifyUser.xhtml?faces-redirect=true";
     }
 
@@ -94,6 +102,7 @@ public class ListUsersBean implements Serializable {
         String uuid = selectedUser.getUuid().toString();
         String out = requesterUsers.put(uuid, json);
         System.out.println(out);
+        userList = getUserListFromAPI();
         if (out.equals("200")){
             return "userList";
         }
@@ -102,6 +111,7 @@ public class ListUsersBean implements Serializable {
 
     public String applyFilter() {
         // page refresh
+        userList = getUserListFromAPI();
         return "";
     }
 }

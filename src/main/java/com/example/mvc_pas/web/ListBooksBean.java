@@ -7,13 +7,17 @@ import com.example.mvc_pas.model.Rent;
 import com.example.mvc_pas.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -25,6 +29,7 @@ public class ListBooksBean implements Serializable {
     private Book selectedBook;
     private List<Rent> selectedBooksRents = new ArrayList<>();
     private String uuidFilter = "";
+    private List<Book> bookList = getBooksFromApi();
 
     public List<Rent> getSelectedBooksRents() {
         return selectedBooksRents;
@@ -47,6 +52,11 @@ public class ListBooksBean implements Serializable {
     }
 
     public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public List<Book> getBooksFromApi() {
+        System.out.println("books from api called");
         String json = requester.get();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -62,19 +72,23 @@ public class ListBooksBean implements Serializable {
         return null;
     }
 
-    public String remove(Book book) {
+    public String remove(Book book) throws InterruptedException {
         requester.delete(book.getUuid().toString());
-        return "";
+        System.out.println(bookList);
+        bookList = getBooksFromApi();
+        return "/book/list.xhtml?faces-redirect=true";
     }
 
     public String moveToEdit(Book book) {
         setSelectedBook(book);
+        bookList = getBooksFromApi();
         return "/book/modifyBook.xhtml?faces-redirect=true";
     }
 
     public String moveToDetails(Book book) throws JsonProcessingException {
         setSelectedBook(book);
         setSelectedBooksRents();
+        bookList = getBooksFromApi();
         return "/book/details.xhtml?faces-redirect=true";
     }
 
@@ -85,6 +99,7 @@ public class ListBooksBean implements Serializable {
         String uuid = selectedBook.getUuid().toString();
         String out = requester.put(uuid, json);
         System.out.println(out);
+        getBooksFromApi();
         if (out.equals("200")){
             return "bookList";
         }
@@ -100,7 +115,7 @@ public class ListBooksBean implements Serializable {
     }
 
     public String applyFilter() {
-        // refresh page
+        bookList = getBooksFromApi();
         return "";
     }
 }
