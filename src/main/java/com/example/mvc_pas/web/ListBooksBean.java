@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ListBooksBean implements Serializable {
     private final ApiRequester requester = new ApiRequester("books");
     private final ApiRequester requesterRents = new ApiRequester("rents");
@@ -52,7 +52,7 @@ public class ListBooksBean implements Serializable {
     }
 
     public List<Book> getBookList() {
-        return bookList;
+        return new ArrayList<>(bookList);
     }
 
     public List<Book> getBooksFromApi() {
@@ -73,8 +73,8 @@ public class ListBooksBean implements Serializable {
     }
 
     public String remove(Book book) throws InterruptedException {
+        System.out.println(book);
         requester.delete(book.getUuid().toString());
-        System.out.println(bookList);
         bookList = getBooksFromApi();
         return "/book/list.xhtml?faces-redirect=true";
     }
@@ -117,5 +117,9 @@ public class ListBooksBean implements Serializable {
     public String applyFilter() {
         bookList = getBooksFromApi();
         return "";
+    }
+
+    public void refreshBookList() {
+        bookList = getBooksFromApi();
     }
 }

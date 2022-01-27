@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 
@@ -22,12 +23,16 @@ public class CreateBookBean {
         this.book = book;
     }
 
+    @Inject
+    private ListBooksBean listBooksBean;
+
     public String create() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ApiRequester requester = new ApiRequester("books");
         String json = objectMapper.writeValueAsString(book);
         String out = requester.post(json);
         if (out.equals("201")){
+            listBooksBean.refreshBookList();
             return "bookList";
         }
         return "";

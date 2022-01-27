@@ -27,7 +27,7 @@ public class ListUsersBean implements Serializable {
     private List<User> userList = getUserListFromAPI();
 
     public List<User> getUserList() {
-        return userList;
+        return new ArrayList<>(userList);
     }
 
     public String getUuidFilter() {

@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class ListRentsBean implements Serializable {
     private List<Rent> rentList = getRentListFromAPI();
 
     public List<Rent> getRentList() {
-        return rentList;
+        return new ArrayList<>(rentList);
     }
 
     public String getUuidBookFilter() {
