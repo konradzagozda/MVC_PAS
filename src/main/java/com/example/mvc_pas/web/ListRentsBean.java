@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.ws.rs.client.Entity;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class ListRentsBean implements Serializable {
     }
 
     public String end(Rent rent) {
-        requester.put(rent.getUuid().toString(), ""); // put on rent ends the rent
+        requester.put(rent.getUuid().toString(), null); // put on rent ends the rent
         rentList = getRentListFromAPI();
         return "";
     }

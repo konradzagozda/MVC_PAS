@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.ws.rs.client.Entity;
 
 @RequestScoped
 @Named
@@ -26,8 +27,7 @@ public class CreateRentBean {
     public String create() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ApiRequester requester = new ApiRequester("rents");
-        String json = objectMapper.writeValueAsString(rent);
-        String out = requester.post(json);
+        String out = requester.post(Entity.json(rent));
         if (out.equals("201")){
             return "rentList";
         }

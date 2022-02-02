@@ -13,6 +13,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.ws.rs.client.Entity;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -93,12 +94,8 @@ public class ListBooksBean implements Serializable {
     }
 
     public String edit() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(selectedBook);
-        System.out.println(json);
         String uuid = selectedBook.getUuid().toString();
-        String out = requester.put(uuid, json);
-        System.out.println(out);
+        String out = requester.put(uuid, Entity.json(selectedBook));
         getBooksFromApi();
         if (out.equals("200")){
             return "bookList";

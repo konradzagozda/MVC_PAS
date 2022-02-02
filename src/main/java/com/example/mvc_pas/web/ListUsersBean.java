@@ -2,6 +2,7 @@ package com.example.mvc_pas.web;
 
 
 import com.example.mvc_pas.ApiRequester;
+import com.example.mvc_pas.dto.UserDto;
 import com.example.mvc_pas.model.Rent;
 import com.example.mvc_pas.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.ws.rs.client.Entity;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -96,12 +98,9 @@ public class ListUsersBean implements Serializable {
     }
 
     public String edit() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(selectedUser);
-        System.out.println(json);
         String uuid = selectedUser.getUuid().toString();
-        String out = requesterUsers.put(uuid, json);
-        System.out.println(out);
+        UserDto userDto = new UserDto(selectedUser);
+        String out = requesterUsers.put(uuid, Entity.json(userDto));
         userList = getUserListFromAPI();
         if (out.equals("200")){
             return "userList";

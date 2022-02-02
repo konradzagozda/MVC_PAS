@@ -2,6 +2,7 @@ package com.example.mvc_pas.web;
 
 
 import com.example.mvc_pas.ApiRequester;
+import com.example.mvc_pas.dto.UserDto;
 import com.example.mvc_pas.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.ws.rs.client.Entity;
 import java.util.regex.Pattern;
 
 @RequestScoped
@@ -28,10 +30,9 @@ public class CreateUserBean {
     }
 
     public String create() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
         ApiRequester requester = new ApiRequester("users");
-        String json = objectMapper.writeValueAsString(user);
-        String out = requester.post(json);
+        UserDto userDto = new UserDto(user);
+        String out = requester.post(Entity.json(userDto));
         if (out.equals("201")){
             return "userList";
         }

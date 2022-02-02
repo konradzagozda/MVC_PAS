@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.client.Entity;
 
 
 @Named
@@ -29,8 +30,7 @@ public class CreateBookBean {
     public String create() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ApiRequester requester = new ApiRequester("books");
-        String json = objectMapper.writeValueAsString(book);
-        String out = requester.post(json);
+        String out = requester.post(Entity.json(book));
         if (out.equals("201")){
             listBooksBean.refreshBookList();
             return "bookList";
